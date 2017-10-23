@@ -1,0 +1,26 @@
+{
+  "name": "monkeyblogserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/18235442969/monkeyblogServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/18235442969/monkeyblogServer/issues"
+  },
+  "homepage": "https://github.com/18235442969/monkeyblogServer#readme",
+  "dependencies": {
+    "busboy": "^0.2.14",
+    "koa": "^2.3.0",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^7.2.1",
+    "koa-static": "^4.0.1"
+  }
+}
