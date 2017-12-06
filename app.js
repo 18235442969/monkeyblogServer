@@ -1,13 +1,12 @@
 import Koa from 'koa'
-import bodyParser from 'koa-bodyparser'
 import koaStatic from 'koa-static'
 import koaCors from 'koa-cors'
 import mongoose from 'mongoose'
 import path from 'path'
 import { config } from './config.js'
 import api from './api'
-import koaBody from 'koa-body'
-let body = koaBody({multipart:true})
+// import koaBody from 'koa-body'
+// let body = koaBody({multipart:true})
 
 mongoose.Promise = Promise
 mongoose.connect(config.mongodb, config.mongodbSecret)
@@ -21,8 +20,8 @@ const app = new Koa();
 //解决跨域
 app.use(koaCors())
 
-// 使用ctx.body解析中间件
-app.use(body);
+// 使用ctx.body解析中间件 影响图片上传不统一配置
+// app.use(body);	
 
 const staticPath = './static'
 app.use(koaStatic(

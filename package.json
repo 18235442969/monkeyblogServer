@@ -24,6 +24,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0",
     "busboy": "^0.2.14",
+    "crypto": "^1.0.1",
     "es6-promise": "^4.1.1",
     "import-dir": "^0.0.1",
     "koa": "^2.3.0",

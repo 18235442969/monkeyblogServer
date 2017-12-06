@@ -1,33 +1,35 @@
+/*
+ * @Author: hzy 
+ * @Date: 2017-12-06 14:44:27 
+ * @Last Modified by: hzy
+ * @Last Modified time: 2017-12-06 16:43:36
+ */
 import path from 'path'
 import { config } from '../config.js'
 import { upload } from '../util/upload.js'
 import Tag from '../model/tag.js'
+import JsonModel from '../core/model/jsonModel'
+
 /**
  * [uploadImg 上传图片]
  */
 export async function uploadImg(ctx){
-	let result = {
-		status: '01',
-		msg: 'success'
-	}
+	let json = new JsonModel();
 
 	let serverFilePath = path.join(config.root, 'static/image')
 
-	result.imgName = await upload(ctx, {
+	json.data = await upload(ctx, {
 		fileType: 'album',
 		path: serverFilePath
 	})
 
-	ctx.body = result
+	ctx.body = json;
 }
 /**
  * [addTag 添加标签]
  */
 export async function addTag(ctx){
-	let result = {
-		status: '01',
-		msg: 'success'
-	}
+	let json = new JsonModel();
     let tag = new Tag({
       	value: ctx.query.value,
       	createTime: new Date()
@@ -36,49 +38,41 @@ export async function addTag(ctx){
       	console.log(err);
     });
     if ( tagInfo ) {
-    	result.data = tagInfo
-    	ctx.body = result;
+    	json.data = tagInfo;
     } else {
-    	result.status = "02";
-    	result.msg = "fail";
-    	ctx.body = result;
+    	json.msg = "添加失败";
     }
+	ctx.body = json;
 }
 /**
  * [getTags 获取标签]
  */
 export async function getTags(ctx){
-	let result = {
-		status: '01',
-		msg: 'success'
-	}
+	let json = new JsonModel();
     let tagList = await Tag.find().exec().catch(err => {
       	console.log(err);
     })
     if ( tagList ) {
-    	result.data = tagList
+    	json.data = tagList;
     } else {
-    	result.status = "02";
-    	result.msg = "fail";
+    	json.msg = "获取标签失败";
     }
-	ctx.body = result;
+	ctx.body = json;
 }
 
 /**
  * [delTag 删除标签]
  */
 export async function delTag(ctx){
-    let result = {
-        status: '01',
-		msg: 'success'
-    }
+	let json = new JsonModel();
+
 	const tag = await Tag.remove({
 		_id: ctx.request.body.id
 	}).catch(err => console.log(err));
-	
+
 	if ( !tag ) {
-		result.msg = '删除失败!';
-		result.status = '02';
+		console.log(json);
+		json._msg = "删除失败";
 	}
-    ctx.body = result;
+    ctx.body = json;
 }

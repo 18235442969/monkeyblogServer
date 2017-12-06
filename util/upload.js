@@ -32,11 +32,9 @@ function getSuffixName(fileName){
  */
 function upload(ctx, option){
 	let req = ctx.req;
-	let res = ctx.res;
 	let busboy = new Busboy({
 		headers: req.headers
 	})
-
 	//获取类型
 	let fileType = option.fileType || 'album'
 	let filePath = path.join(option.path, fileType)
