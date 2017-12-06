@@ -27,8 +27,6 @@ function getSuffixName(fileName){
 }
 
 
-
-
 /**
  * [upload 上传]
  */

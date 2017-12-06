@@ -6,7 +6,7 @@ import { config } from '../config.js'
 const routes = importDir('./routes')
 
 export default function api() {
-	const router = new Router({
+    const router = new Router({
     	prefix: config.baseApi
   	});
   	Object.keys(routes).forEach(name => {

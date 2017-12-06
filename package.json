@@ -27,12 +27,15 @@
     "es6-promise": "^4.1.1",
     "import-dir": "^0.0.1",
     "koa": "^2.3.0",
+    "koa-body": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
     "koa-cors": "^0.0.16",
     "koa-router": "^7.2.1",
     "koa-static": "^4.0.1",
     "moment": "^2.19.1",
     "mongoose": "^4.12.4",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "qs": "^6.5.1"
   }
 }

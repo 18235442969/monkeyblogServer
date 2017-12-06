@@ -63,3 +63,22 @@ export async function getTags(ctx){
     }
 	ctx.body = result;
 }
+
+/**
+ * [delTag 删除标签]
+ */
+export async function delTag(ctx){
+    let result = {
+        status: '01',
+		msg: 'success'
+    }
+	const tag = await Tag.remove({
+		_id: ctx.request.body.id
+	}).catch(err => console.log(err));
+	
+	if ( !tag ) {
+		result.msg = '删除失败!';
+		result.status = '02';
+	}
+    ctx.body = result;
+}
