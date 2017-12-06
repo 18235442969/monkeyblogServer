@@ -2,7 +2,7 @@
  * @Author: hzy 
  * @Date: 2017-12-06 14:44:27 
  * @Last Modified by: hzy
- * @Last Modified time: 2017-12-06 16:43:36
+ * @Last Modified time: 2017-12-06 17:27:14
  */
 import path from 'path'
 import { config } from '../config.js'
@@ -36,7 +36,8 @@ export async function addTag(ctx){
     })
     let tagInfo = await tag.save().catch(err => {
       	console.log(err);
-    });
+	});
+	
     if ( tagInfo ) {
     	json.data = tagInfo;
     } else {
