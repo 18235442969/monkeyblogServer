@@ -6,5 +6,7 @@ export default async (router) => {
 	router.post('/upload', newsController.uploadImg),
 	router.get('/article/addTag', newsController.addTag),
 	router.get('/article/getTags', newsController.getTags),
-	router.post('/article/delTag', body, newsController.delTag)
+	router.post('/article/delTag', body, newsController.delTag),
+	router.post('/article/addArticle', body, newsController.addArticle),
+	router.get('/article/getArticleList', newsController.getArticleList)
 }
