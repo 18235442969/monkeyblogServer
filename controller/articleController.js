@@ -3,7 +3,7 @@ import article from '../api/routes/article';
  * @Author: hzy 
  * @Date: 2017-12-06 14:44:27 
  * @Last Modified by: hzy
- * @Last Modified time: 2017-12-07 17:36:50
+ * @Last Modified time: 2017-12-08 15:17:08
  */
 import path from 'path'
 import { config } from '../config.js'
@@ -111,25 +111,48 @@ export async function addArticle(ctx) {
 export async function getArticleList(ctx) {
 	let json = new JsonModel();
 	const tagId = ctx.query.tagId;
-	const page = ctx.query.page; 
+	const page = ctx.query.page;
+	const state = ctx.query.state; 
 	
 	//筛选条件
-	const filterTag = {};
-	if (tagId === 0) {
-	  	filterTag.tagId = tagId;
+	let filterTag = {};
+	//文章查询
+	let articleWhere = Article.find()
+	if (tagId != 0) {
+		filterTag.tagId = tagId;
+		articleWhere = articleWhere.where('tagId').in([tagId])
 	}
-
+	if(state){
+		articleWhere = articleWhere.where('state').in([state]);
+	}
 	try {
-		const count = Article.count(filterTag);
-		const articleList = Article.find(filterTag).limit(10).skip(page * 10).exec();
-		console.log(count);
-		console.log(articleList);
-	// 	json.data = {
-	// 		count: count,
-	// 		articleList: articleList
-	// 	}
+		//总条数
+		const count = await Article.count(filterTag).catch(err => console.log(err));
+		//文章列表
+		const articleList = await articleWhere.limit(10).skip((page - 1) * 10).sort({
+			createTime: -1
+		}).exec().catch(err => console.log(err));
+		json.data = {
+			count: count,
+			articleList: articleList
+		}
 	} catch (err) {
 		json._msg = "获取失败";
 	}
-	// ctx.body = json;
+	ctx.body = json;
+}
+
+/**
+ * [delArticle 删除文章]
+ */
+export async function delArticle(ctx) {
+	let json = new JsonModel();
+	const article = await Article.remove({
+		_id: ctx.query.id
+	}).catch(err => console.log(err));
+
+	if (!article) {
+    	json._msg = "删除失败";
+  	}
+	ctx.body = json;
 }
