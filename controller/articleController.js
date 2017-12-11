@@ -3,7 +3,7 @@ import article from '../api/routes/article';
  * @Author: hzy 
  * @Date: 2017-12-06 14:44:27 
  * @Last Modified by: hzy
- * @Last Modified time: 2017-12-08 15:17:08
+ * @Last Modified time: 2017-12-11 15:39:35
  */
 import path from 'path'
 import { config } from '../config.js'
@@ -101,6 +101,34 @@ export async function addArticle(ctx) {
 		json._msg = "保存失败";
 	} else {
 		json.data = addArticle;
+	}
+	ctx.body = json;
+}
+
+/**
+ * [editArticle 修改文章]
+ */
+export async function editArticle(ctx) {
+	let json = new JsonModel();
+	const req = ctx.request.body;
+	const editArticle = await Article.updateOne({
+		_id: req.id
+	},{
+		title: req.title,
+		tagId: req.tagId,
+		tagName: req.tagName,
+		content: req.content,
+		state: req.state
+	}).catch(err => {
+		console.log(err);
+	});
+	if (!editArticle) {
+		json._msg = "保存失败";
+	} else {
+		const article = await Article.findOne({
+			_id: req.id
+		}).catch(err => console.log(err));
+		json.data = article;
 	}
 	ctx.body = json;
 }
