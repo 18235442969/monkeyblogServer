@@ -21,7 +21,7 @@ const app = new Koa();
 app.use(koaCors())
 
 // 使用ctx.body解析中间件 影响图片上传不统一配置
-// app.use(body);	
+// app.use(body);
 
 const staticPath = './static'
 app.use(koaStatic(

@@ -1,6 +1,10 @@
 import JsonModel from '../core/model/jsonModel';
 import User from '../model/user.js'
 import toMd5 from '../util/md5'
+
+/**
+ * [initUser 初始化注册用户]
+ */
 export async function initUser(ctx) {
 	let user = await User.find().exec().catch(err => {
       console.log(err);
@@ -21,7 +25,9 @@ export async function initUser(ctx) {
 	    });
   	}
 }
-
+/**
+ * [getHomeData 登录]
+ */
 export async function getHomeData(ctx){
 	var json = new JsonModel();
 	let username = ctx.request.body.username
@@ -40,5 +46,4 @@ export async function getHomeData(ctx){
 		json._msg = "查无此人";
 	}
 	ctx.body = json;
-	
 }
