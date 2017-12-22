@@ -10,5 +10,6 @@ export default async (router) => {
 	router.post('/article/addArticle', body, newsController.addArticle),
 	router.post('/article/editArticle',body, newsController.editArticle),
 	router.get('/article/getArticleList', newsController.getArticleList),
+	router.get('/article/getArticleDetail', newsController.getArticleDetail),
 	router.get('/article/delArticle', newsController.delArticle)
 }

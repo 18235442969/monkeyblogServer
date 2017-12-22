@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
 	value: String,
+	articleCount: Number,
 	createTime: String
 },{versionKey: false})
 

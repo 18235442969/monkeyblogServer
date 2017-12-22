@@ -3,7 +3,7 @@ import article from '../api/routes/article';
  * @Author: hzy 
  * @Date: 2017-12-06 14:44:27 
  * @Last Modified by: hzy
- * @Last Modified time: 2017-12-11 15:39:35
+ * @Last Modified time: 2017-12-20 09:58:57
  */
 import path from 'path'
 import { config } from '../config.js'
@@ -33,7 +33,8 @@ export async function uploadImg(ctx){
 export async function addTag(ctx){
 	let json = new JsonModel();
     let tag = new Tag({
-      	value: ctx.query.value,
+		value: ctx.query.value,
+		articleCount: 0,  
       	createTime: new Date()
     })
     let tagInfo = await tag.save().catch(err => {
@@ -56,6 +57,11 @@ export async function getTags(ctx){
       	console.log(err);
     })
     if ( tagList ) {
+		for (let e of tagList) {
+			e.articleCount = await Article.count({
+				tagId: e._id
+			}).catch(err => console.log(err));
+		}
     	json.data = tagList;
     } else {
 		json._msg = "获取标签失败";
@@ -166,6 +172,20 @@ export async function getArticleList(ctx) {
 		}
 	} catch (err) {
 		json._msg = "获取失败";
+	}
+	ctx.body = json;
+}
+
+/**
+ * [getArticleDetail 获取文章详情]
+ */
+export async function getArticleDetail(ctx) {
+	let json = new JsonModel();
+	const article = await Article.findById(ctx.query.id).catch(err => console.log(err))
+	if (!article) {
+		json._msg = '获取失败';
+	} else {
+		json.data = article;
 	}
 	ctx.body = json;
 }
